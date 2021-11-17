@@ -1,19 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
-import {getPopularMovies} from './services/services';
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
+import Home from './screens/Home';
 const App = () => {
-  const [movies, setMovies] = useState([]);
-  useEffect(() => {
-    getPopularMovies()
-      .then(movie => {
-        setMovies(movie);
-      })
-      .catch(e => console.error(e));
-  }, []);
   return (
-    <View>
-      <Text>hello</Text>
+    <View style={styles.container}>
+      <Home />
     </View>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 export default App;
