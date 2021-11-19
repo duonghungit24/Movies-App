@@ -19,3 +19,9 @@ export const getPopularTV = async () => {
   // console.log(response.data.results);
   return response.data.results;
 };
+//  family movies
+export const getFamilyMovies = async () => {
+  const response = await axios.get(`${apiUrl}/movie/top_rated?${apiKey}`);
+  // console.log(response.data.results);
+  return response.data.results;
+};
