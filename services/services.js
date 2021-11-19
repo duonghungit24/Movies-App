@@ -7,9 +7,15 @@ export const getPopularMovies = async () => {
   // console.log(response.data.results);
   return response.data.results;
 };
-// upcoming moves
+// upcoming movies
 export const getUpcomingMovies = async () => {
   const response = await axios.get(`${apiUrl}/movie/upcoming?${apiKey}`);
+  // console.log(response.data.results);
+  return response.data.results;
+};
+//popular Tv
+export const getPopularTV = async () => {
+  const response = await axios.get(`${apiUrl}/tv/popular?${apiKey}`);
   // console.log(response.data.results);
   return response.data.results;
 };
