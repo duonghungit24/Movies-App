@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {TouchableOpacity, Image, StyleSheet, Text} from 'react-native';
 import PropTypes from 'prop-types';
 const imageError = require('../assets/image/image_error.jpg');
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
 Cart.propTypes = {
   item: PropTypes.object,
 };
-export default Cart;
+export default memo(Cart);
