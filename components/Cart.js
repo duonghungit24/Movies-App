@@ -3,9 +3,11 @@ import {TouchableOpacity, Image, StyleSheet, Text} from 'react-native';
 import PropTypes from 'prop-types';
 const imageError = require('../assets/image/image_error.jpg');
 const Cart = props => {
-  const {item} = props;
+  const {item, navigation} = props;
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Details')}
+      style={styles.container}>
       <Image
         resizeMode="cover"
         style={styles.image}
