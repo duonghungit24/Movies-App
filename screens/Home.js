@@ -86,7 +86,7 @@ const Home = ({navigation}) => {
             <View style={styles.carousel}>
               <List
                 navigation={navigation}
-                title="Upcoming movies"
+                title="Popular TV Shows"
                 content={moviesPopularTV}
               />
             </View>
@@ -95,7 +95,7 @@ const Home = ({navigation}) => {
             <View style={styles.carousel}>
               <List
                 navigation={navigation}
-                title="Top movies"
+                title="Top rate movies"
                 content={moviesFamily}
               />
             </View>

@@ -6,7 +6,7 @@ const Cart = props => {
   const {item, navigation} = props;
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Details')}
+      onPress={() => navigation.navigate('Details', {movieId: item.id})}
       style={styles.container}>
       <Image
         resizeMode="cover"
