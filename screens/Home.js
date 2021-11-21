@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, memo} from 'react';
 import {
   View,
   Dimensions,
@@ -14,6 +14,7 @@ import {
 } from '../services/services';
 import {SliderBox} from 'react-native-image-slider-box';
 import List from '../components/List';
+import Error from '../components/Error';
 const {height} = Dimensions.get('screen');
 const Home = () => {
   const [moviesPopular, setMoviesPopular] = useState();
@@ -21,6 +22,7 @@ const Home = () => {
   const [moviesPopularTV, setMoviesPopularTV] = useState();
   const [moviesFamily, setMoviesFamily] = useState();
   const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
   const getData = () => {
     return Promise.all([
       getPopularMovies(),
@@ -41,7 +43,7 @@ const Home = () => {
           const arrayImg = [];
           moviesUpcomingData.forEach(movie => {
             arrayImg.push(
-              'https://image.tmdb.org/t/p/w500' + movie.backdrop_path,
+              'https://image.tmdb.org/t/p/w500' + movie.poster_path,
             );
           });
           setArrayImages(arrayImg);
@@ -51,12 +53,14 @@ const Home = () => {
           setLoaded(true);
         },
       )
-      .catch(err => console.log(err))
+      .catch(() => {
+        setError(true);
+      })
       .finally(() => setLoaded(true));
   }, []);
   return (
     <React.Fragment>
-      {loaded && (
+      {loaded && !error && (
         <ScrollView>
           {arrayImages && (
             <View style={styles.slider}>
@@ -87,6 +91,7 @@ const Home = () => {
         </ScrollView>
       )}
       {!loaded && <ActivityIndicator size="large" />}
+      {error && <Error />}
     </React.Fragment>
   );
 };
@@ -105,4 +110,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-export default Home;
+export default memo(Home);
