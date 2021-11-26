@@ -1,6 +1,15 @@
 import React, {useEffect, useState, memo} from 'react';
-import {ScrollView, Image, StyleSheet, Dimensions} from 'react-native';
+import {
+  ScrollView,
+  Image,
+  StyleSheet,
+  Dimensions,
+  View,
+  Text,
+} from 'react-native';
 import {getDetailsMovies} from '../services/services';
+import StarRating from 'react-native-star-rating';
+import dateFormat from 'dateformat';
 const {height, width} = Dimensions.get('screen');
 const imageError = require('../assets/image/image_error.jpg');
 const Details = ({navigation, route}) => {
@@ -31,14 +40,70 @@ const Details = ({navigation, route}) => {
                 : imageError
             }
           />
+          <View style={styles.container}>
+            <Text style={styles.title}>{movieDetails.title}</Text>
+            {movieDetails.genres && (
+              <View style={styles.wrapItem}>
+                {movieDetails.genres.map(item => (
+                  <Text key={item.id} style={styles.item}>
+                    {item.name}
+                  </Text>
+                ))}
+              </View>
+            )}
+            <StarRating
+              disabled={true}
+              maxStars={5}
+              rating={movieDetails.vote_average / 2}
+              fullStarColor={'gold'}
+              starSize={30}
+            />
+            <Text style={styles.overview}>{movieDetails.overview}</Text>
+            <Text style={styles.releaseDate}>
+              {'Realease date: ' +
+                dateFormat(movieDetails.release_date, 'mmmm dS, yyyy')}
+            </Text>
+          </View>
         </ScrollView>
       )}
     </React.Fragment>
   );
 };
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   image: {
     height: height / 2.5,
+  },
+  title: {
+    color: 'black',
+    fontSize: 22,
+    fontWeight: 'bold',
+    padding: 3,
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  wrapItem: {
+    flexDirection: 'row',
+    alignContent: 'center',
+    marginBottom: 10,
+  },
+  item: {
+    color: 'black',
+    marginLeft: 10,
+    fontWeight: 'bold',
+  },
+  overview: {
+    padding: 15,
+    color: 'black',
+  },
+  releaseDate: {
+    color: 'black',
+    fontWeight: 'bold',
   },
 });
 export default memo(Details);
