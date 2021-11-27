@@ -4,6 +4,7 @@ import Cart from './Cart';
 import PropTypes from 'prop-types';
 const List = props => {
   const {title, navigation, content} = props;
+  const handleRender = ({item}) => <Cart navigation={navigation} item={item} />;
   return (
     <View style={styles.list}>
       <View>
@@ -13,7 +14,8 @@ const List = props => {
         <FlatList
           horizontal={true}
           data={content}
-          renderItem={({item}) => <Cart navigation={navigation} item={item} />}
+          keyExtractor={item => item.id}
+          renderItem={handleRender}
         />
       </View>
     </View>
