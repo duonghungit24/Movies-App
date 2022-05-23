@@ -25,8 +25,21 @@ export const getFamilyMovies = async () => {
   // console.log(response.data.results);
   return response.data.results;
 };
+export const getDocumentaryMovies = async () => {
+  const resp = await axios.get(
+    `${apiUrl}/discover/movie?${apiKey}&with_genres=99`,
+  );
+  return resp.data.results;
+};
 export const getDetailsMovies = async id => {
   const response = await axios.get(`${apiUrl}/movie/${id}?${apiKey}`);
   // console.log(response.data.results);
   return response.data;
 };
+export const searchMovieTv = async (query, type) => {
+  const resp = await axios.get(
+    `${apiUrl}/search/${type}?${apiKey}&query=${query}`,
+  );
+  return resp.data.results;
+};
+

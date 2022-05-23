@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import {
   getPopularMovies,
@@ -59,7 +60,7 @@ const Home = ({navigation}) => {
       .finally(() => setLoaded(true));
   }, []);
   return (
-    <React.Fragment>
+    <SafeAreaView style={{flex: 1}}>
       {loaded && !error && (
         <ScrollView>
           {arrayImages && (
@@ -104,7 +105,7 @@ const Home = ({navigation}) => {
       )}
       {!loaded && <ActivityIndicator size="large" />}
       {error && <Error />}
-    </React.Fragment>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({

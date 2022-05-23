@@ -7,18 +7,21 @@ import {
   View,
   Text,
   Modal,
+  ActivityIndicator,
   Pressable,
 } from 'react-native';
 import {getDetailsMovies} from '../services/services';
 import StarRating from 'react-native-star-rating';
 import dateFormat from 'dateformat';
 import PlayBtn from '../components/PlayButton';
+import VideoShow from '../components/Video';
 const {height, width} = Dimensions.get('screen');
 const imageError = require('../assets/image/image_error.jpg');
 const Details = ({navigation, route}) => {
   const [loaded, setLoaded] = useState(false);
   const [movieDetails, setMoviesDetails] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [err, setError] = useState(false);
   const idMovies = route.params.movieId;
   useEffect(() => {
     getDetailsMovies(idMovies)
@@ -26,11 +29,12 @@ const Details = ({navigation, route}) => {
         setLoaded(true);
         setMoviesDetails(movieData);
       })
-      .catch(error => console.log(error));
+      .catch(() => setError(true));
   }, [idMovies]);
   const handleVisible = () => {
     setModalVisible(!modalVisible);
   };
+  console.log(idMovies)
   return (
     <React.Fragment>
       {loaded && (
@@ -76,11 +80,21 @@ const Details = ({navigation, route}) => {
               </Text>
             </View>
           </ScrollView>
-          <Modal animationType="slide" visible={modalVisible}>
-            <Pressable onPress={handleVisible}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
+          <Modal
+           
+            animationType="slide"
+            visible={modalVisible}>
+            <View
+              style={{width: '100%', height: height/3}}>
+              <VideoShow onClose={handleVisible} />
+            </View>
           </Modal>
+        </View>
+      )}
+      {!loaded && !err && <ActivityIndicator size="large" />}
+      {err && (
+        <View style={styles.wrapErr}>
+          <Text style={styles.textErr}>Phim đang bảo trì</Text>
         </View>
       )}
     </React.Fragment>
@@ -128,5 +142,7 @@ const styles = StyleSheet.create({
     top: -30,
     right: 10,
   },
+  wrapErr: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+  textErr: {fontSize: 16, fontWeight: 'bold'},
 });
 export default memo(Details);
